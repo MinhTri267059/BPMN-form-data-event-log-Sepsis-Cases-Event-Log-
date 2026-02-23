@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sepsis_bpmn" targetNamespace="http://sepsis.example.org" exporter="Camunda Modeler" exporterVersion="5.44.0">
+  <process id="proc_sepsis" isExecutable="true" camunda:historyTimeToLive="180">
+    <startEvent id="start" name="Start" camunda:initiator="1" />
+    <task id="er_reg" name="ER Registration" />
+    <task id="er_triage" name="ER Triage" />
+    <task id="er_sepsis" name="ER Sepsis Triage" />
+    <exclusiveGateway id="gw_split1" name="" />
+    <task id="lab_loop" name="Lab Tests (CRP / Leucocytes / LacticAcid)" />
+    <task id="iv_liquid" name="IV Liquid" />
+    <task id="iv_antibiotics" name="IV Antibiotics" />
+    <exclusiveGateway id="gw_join1" name="" />
+    <task id="adm_nc" name="Admission NC" />
+    <task id="adm_ic" name="Admission IC" />
+    <exclusiveGateway id="gw_join2" name="" />
+    <exclusiveGateway id="gw_release" name="" />
+    <task id="rel_a" name="Release A" />
+    <task id="rel_b" name="Release B" />
+    <task id="rel_c" name="Release C" />
+    <task id="rel_d" name="Release D" />
+    <task id="return_er" name="Return ER" />
+    <exclusiveGateway id="gw_end" name="" />
+    <endEvent id="end" name="End" />
+    <sequenceFlow id="flow_1" name="" sourceRef="start" targetRef="er_reg" />
+    <sequenceFlow id="flow_2" name="971" sourceRef="er_reg" targetRef="er_triage" />
+    <sequenceFlow id="flow_3" name="905" sourceRef="er_triage" targetRef="er_sepsis" />
+    <sequenceFlow id="flow_4" name="" sourceRef="er_sepsis" targetRef="gw_split1" />
+    <sequenceFlow id="flow_5" name="lab route" sourceRef="gw_split1" targetRef="lab_loop">
+      <conditionExpression xsi:type="tFormalExpression">{score &lt;= 50}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_6" name="IV route" sourceRef="gw_split1" targetRef="iv_liquid">
+      <conditionExpression xsi:type="tFormalExpression">${score &gt; 50}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="flow_7" name="285 / 269" sourceRef="lab_loop" targetRef="gw_join1" />
+    <sequenceFlow id="flow_8" name="501" sourceRef="iv_liquid" targetRef="iv_antibiotics" />
+    <sequenceFlow id="flow_9" name="489" sourceRef="iv_antibiotics" targetRef="gw_join1" />
+    <sequenceFlow id="flow_10" name="NC" sourceRef="gw_join1" targetRef="adm_nc" />
+    <sequenceFlow id="flow_11" name="IC" sourceRef="gw_join1" targetRef="adm_ic" />
+    <sequenceFlow id="flow_12" name="" sourceRef="adm_nc" targetRef="gw_join2" />
+    <sequenceFlow id="flow_13" name="" sourceRef="adm_ic" targetRef="gw_join2" />
+    <sequenceFlow id="flow_14" name="" sourceRef="gw_join2" targetRef="gw_release" />
+    <sequenceFlow id="flow_15" name="A  (671)" sourceRef="gw_release" targetRef="rel_a" />
+    <sequenceFlow id="flow_16" name="B  (56)" sourceRef="gw_release" targetRef="rel_b" />
+    <sequenceFlow id="flow_17" name="C  (25)" sourceRef="gw_release" targetRef="rel_c" />
+    <sequenceFlow id="flow_18" name="D  (24)" sourceRef="gw_release" targetRef="rel_d" />
+    <sequenceFlow id="flow_19" name="276" sourceRef="rel_a" targetRef="return_er" />
+    <sequenceFlow id="flow_20" name="" sourceRef="return_er" targetRef="gw_end" />
+    <sequenceFlow id="flow_21" name="" sourceRef="rel_b" targetRef="gw_end" />
+    <sequenceFlow id="flow_22" name="" sourceRef="rel_c" targetRef="gw_end" />
+    <sequenceFlow id="flow_23" name="" sourceRef="rel_d" targetRef="gw_end" />
+    <sequenceFlow id="flow_24" name="" sourceRef="gw_end" targetRef="end" />
+  </process>
+  <bpmndi:BPMNDiagram id="diagram1">
+    <bpmndi:BPMNPlane id="plane1" bpmnElement="proc_sepsis">
+      <bpmndi:BPMNShape id="shape_start" bpmnElement="start">
+        <dc:Bounds x="160" y="250" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="178" y="310" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_er_reg" bpmnElement="er_reg">
+        <dc:Bounds x="286" y="244" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_er_triage" bpmnElement="er_triage">
+        <dc:Bounds x="446" y="244" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_er_sepsis" bpmnElement="er_sepsis">
+        <dc:Bounds x="606" y="244" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_lab_loop" bpmnElement="lab_loop">
+        <dc:Bounds x="926" y="100" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_iv_liquid" bpmnElement="iv_liquid">
+        <dc:Bounds x="926" y="388" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_join2" bpmnElement="gw_join2" isMarkerVisible="true">
+        <dc:Bounds x="1597" y="247" width="67" height="67" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_rel_a" bpmnElement="rel_a">
+        <dc:Bounds x="1886" y="84" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_rel_b" bpmnElement="rel_b">
+        <dc:Bounds x="1886" y="188" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_rel_c" bpmnElement="rel_c">
+        <dc:Bounds x="1886" y="300" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_rel_d" bpmnElement="rel_d">
+        <dc:Bounds x="1886" y="404" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_end" bpmnElement="end">
+        <dc:Bounds x="2400" y="250" width="60" height="60" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2420" y="310" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_split1" bpmnElement="gw_split1" isMarkerVisible="true">
+        <dc:Bounds x="797" y="246" width="67" height="67" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_join1" bpmnElement="gw_join1" isMarkerVisible="true">
+        <dc:Bounds x="1277" y="246" width="67" height="67" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_iv_antibiotics" bpmnElement="iv_antibiotics">
+        <dc:Bounds x="1096" y="388" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_release" bpmnElement="gw_release" isMarkerVisible="true">
+        <dc:Bounds x="1716" y="247" width="67" height="67" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_gw_end" bpmnElement="gw_end" isMarkerVisible="true">
+        <dc:Bounds x="2266" y="246" width="67" height="67" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_return_er" bpmnElement="return_er">
+        <dc:Bounds x="2076" y="84" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_adm_nc" bpmnElement="adm_nc">
+        <dc:Bounds x="1406" y="100" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="shape_adm_ic" bpmnElement="adm_ic">
+        <dc:Bounds x="1406" y="388" width="128" height="72" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="edge_1" bpmnElement="flow_1">
+        <di:waypoint x="220" y="280" />
+        <di:waypoint x="286" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_2" bpmnElement="flow_2">
+        <di:waypoint x="414" y="280" />
+        <di:waypoint x="446" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="420" y="255" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_3" bpmnElement="flow_3">
+        <di:waypoint x="574" y="280" />
+        <di:waypoint x="606" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="580" y="255" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_4" bpmnElement="flow_4">
+        <di:waypoint x="734" y="280" />
+        <di:waypoint x="798" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_5" bpmnElement="flow_5">
+        <di:waypoint x="831" y="247" />
+        <di:waypoint x="831" y="136" />
+        <di:waypoint x="926" y="136" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="796" y="113" width="43" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_7" bpmnElement="flow_7">
+        <di:waypoint x="1054" y="136" />
+        <di:waypoint x="1311" y="136" />
+        <di:waypoint x="1311" y="247" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1304" y="182" width="46" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_6" bpmnElement="flow_6">
+        <di:waypoint x="831" y="313" />
+        <di:waypoint x="831" y="424" />
+        <di:waypoint x="926" y="424" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="790" y="383" width="39" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_8" bpmnElement="flow_8">
+        <di:waypoint x="1054" y="424" />
+        <di:waypoint x="1096" y="424" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1065" y="399" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_10" bpmnElement="flow_10">
+        <di:waypoint x="1315" y="250" />
+        <di:waypoint x="1470" y="250" />
+        <di:waypoint x="1470" y="172" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1393" y="228" width="16" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_12" bpmnElement="flow_12">
+        <di:waypoint x="1534" y="136" />
+        <di:waypoint x="1631" y="136" />
+        <di:waypoint x="1631" y="248" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_11" bpmnElement="flow_11">
+        <di:waypoint x="1324" y="300" />
+        <di:waypoint x="1470" y="300" />
+        <di:waypoint x="1470" y="388" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1386" y="277" width="11" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_13" bpmnElement="flow_13">
+        <di:waypoint x="1534" y="424" />
+        <di:waypoint x="1631" y="424" />
+        <di:waypoint x="1631" y="314" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_14" bpmnElement="flow_14">
+        <di:waypoint x="1664" y="281" />
+        <di:waypoint x="1717" y="281" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_15" bpmnElement="flow_15">
+        <di:waypoint x="1750" y="248" />
+        <di:waypoint x="1750" y="120" />
+        <di:waypoint x="1886" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1720" y="169" width="36" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_19" bpmnElement="flow_19">
+        <di:waypoint x="2014" y="120" />
+        <di:waypoint x="2076" y="120" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2035" y="95" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_16" bpmnElement="flow_16">
+        <di:waypoint x="1783" y="281" />
+        <di:waypoint x="1835" y="281" />
+        <di:waypoint x="1835" y="224" />
+        <di:waypoint x="1886" y="224" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1796" y="258" width="30" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_21" bpmnElement="flow_21">
+        <di:waypoint x="2014" y="224" />
+        <di:waypoint x="2140" y="224" />
+        <di:waypoint x="2140" y="280" />
+        <di:waypoint x="2267" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_17" bpmnElement="flow_17">
+        <di:waypoint x="1783" y="281" />
+        <di:waypoint x="1835" y="281" />
+        <di:waypoint x="1835" y="336" />
+        <di:waypoint x="1886" y="336" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1791" y="257" width="31" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_22" bpmnElement="flow_22">
+        <di:waypoint x="2014" y="336" />
+        <di:waypoint x="2140" y="336" />
+        <di:waypoint x="2140" y="280" />
+        <di:waypoint x="2267" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_18" bpmnElement="flow_18">
+        <di:waypoint x="1750" y="314" />
+        <di:waypoint x="1750" y="440" />
+        <di:waypoint x="1886" y="440" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1747" y="364" width="31" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_23" bpmnElement="flow_23">
+        <di:waypoint x="2014" y="440" />
+        <di:waypoint x="2300" y="440" />
+        <di:waypoint x="2300" y="313" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_24" bpmnElement="flow_24">
+        <di:waypoint x="2333" y="280" />
+        <di:waypoint x="2400" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_9" bpmnElement="flow_9">
+        <di:waypoint x="1224" y="424" />
+        <di:waypoint x="1311" y="424" />
+        <di:waypoint x="1311" y="313" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1288" y="355" width="19" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="edge_20" bpmnElement="flow_20">
+        <di:waypoint x="2204" y="120" />
+        <di:waypoint x="2300" y="120" />
+        <di:waypoint x="2300" y="247" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
