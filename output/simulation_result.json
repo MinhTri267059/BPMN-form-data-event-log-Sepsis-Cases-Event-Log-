@@ -1,0 +1,62 @@
+{
+  "generated_at": "2026-03-13T16:58:56",
+  "scenario_name": "Kịch bản 1",
+  "baseline_times": {
+    "ER Registration": 2.9121,
+    "ER Triage": 0.1577,
+    "ER Sepsis Triage": 0.0443,
+    "Lab Tests": 5.8722,
+    "IV Liquid": 1.4149,
+    "IV Antibiotics": 0.5203,
+    "Admission NC": 3.8153,
+    "Admission IC": 1.9819,
+    "Release A": 37.9028,
+    "Release B": 21.8901,
+    "Release C": 118.74,
+    "Release D": 63.3443,
+    "Release E": 42.125,
+    "Return ER": 1126.4887
+  },
+  "scenario_times": {
+    "ER Registration": 2.91,
+    "ER Triage": 0.16,
+    "ER Sepsis Triage": 0.04,
+    "Lab Tests": 5.87,
+    "IV Liquid": 1.41,
+    "IV Antibiotics": 0.52,
+    "Admission NC": 3.82,
+    "Admission IC": 1.98,
+    "Release A": 37.9,
+    "Release B": 21.89,
+    "Release C": 118.74,
+    "Release D": 63.3443,
+    "Release E": 42.125,
+    "Return ER": 1126.49
+  },
+  "baseline_result": {
+    "steps": {
+      "ER Registration": 2.9121072727272725,
+      "ER Triage": 0.15766446991404012,
+      "ER Sepsis Triage": 0.04426401151631478,
+      "Lab / IV (weighted)": 4.10053388986609,
+      "Admission (weighted)": 3.6503107857607704,
+      "Release (weighted)": 41.03011755197466,
+      "Return ER (conditional)": 461.8603731360543
+    },
+    "total_hours": 513.7553711178134,
+    "total_days": 21.406473796575558
+  },
+  "scenario_result": {
+    "steps": {
+      "ER Registration": 2.91,
+      "ER Triage": 0.16,
+      "ER Sepsis Triage": 0.04,
+      "Lab / IV (weighted)": 4.097,
+      "Admission (weighted)": 3.6544,
+      "Release (weighted)": 41.027851,
+      "Return ER (conditional)": 461.86089999999996
+    },
+    "total_hours": 513.750151,
+    "total_days": 21.406256291666665
+  }
+}

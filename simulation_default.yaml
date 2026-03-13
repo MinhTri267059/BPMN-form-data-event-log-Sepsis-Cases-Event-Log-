@@ -1,0 +1,35 @@
+# simulation_default.yaml
+# Tuỳ chỉnh thời gian (giờ) cho từng activity trong quy trình Sepsis.
+# Sao chép file này và chỉnh giá trị để thử nghiệm kịch bản tối ưu.
+#
+# Usage:
+#   python simulate_bpmn.py --config simulation_default.yaml --scenario-name "My Scenario"
+#
+# Đơn vị: giờ (hours). Ví dụ: 0.5 = 30 phút, 24.0 = 1 ngày.
+
+activities:
+  # ── Triage (phân loại ban đầu) ──────────────────────────────────────────────
+  ER Registration:        0.0        # Đăng ký cấp cứu (thường ngay lập tức)
+  ER Triage:              0.30       # Phân loại cấp cứu (~18 phút)
+  ER Sepsis Triage:       0.01       # Xác nhận sepsis (~1 phút)
+
+  # ── Xét nghiệm (Lab route) ──────────────────────────────────────────────────
+  Lab Tests:              48.0       # CRP / Leucocytes / LacticAcid (chờ kết quả ~2 ngày)
+
+  # ── Truyền dịch / kháng sinh (IV route) ────────────────────────────────────
+  IV Liquid:              2.50       # Truyền dịch (~2.5 giờ)
+  IV Antibiotics:         0.01       # Truyền kháng sinh (bắt đầu rất nhanh)
+
+  # ── Nhập viện ───────────────────────────────────────────────────────────────
+  Admission NC:           9.00       # Nhập khoa thường (~9 giờ chờ)
+  Admission IC:           72.0       # Nhập ICU (~3 ngày)
+
+  # ── Xuất viện ───────────────────────────────────────────────────────────────
+  Release A:              0.10       # Xuất viện loại A
+  Release B:              0.10       # Xuất viện loại B
+  Release C:              0.10       # Xuất viện loại C
+  Release D:              0.10       # Xuất viện loại D
+  Release E:              0.10       # Xuất viện loại E
+
+  # ── Quay lại cấp cứu ────────────────────────────────────────────────────────
+  Return ER:              24.0       # Quay lại cấp cứu (~24h sau xuất viện)

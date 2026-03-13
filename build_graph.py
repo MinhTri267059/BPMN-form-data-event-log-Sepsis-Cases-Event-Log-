@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as mcolors
 import networkx as nx
 import pandas as pd
+from itertools import islice
 
 
 def parse_args() -> argparse.Namespace:
@@ -162,7 +163,82 @@ def write_centrality(path: str, df: pd.DataFrame):
     df.to_csv(path, index_label="rank", encoding="utf-8")
 
 
-def draw_graph(graph: nx.DiGraph, centrality_df: pd.DataFrame, output_path: str, seed: int):
+# ─────────────────────────────────────────────────────────────────────────────
+#  LOOP DETECTION
+# ─────────────────────────────────────────────────────────────────────────────
+
+def detect_loops(graph: nx.DiGraph, max_cycles: int = 200) -> list[dict]:
+    """Detect all simple cycles in the graph (capped at max_cycles for performance).
+
+    Returns a list of dicts with keys:
+      - loop_path  : " → " joined string of nodes in the cycle
+      - length     : number of nodes in the cycle
+      - min_edge_weight : minimum edge weight along the cycle (proxy for frequency)
+      - nodes      : list of node names (for downstream use)
+    """
+    results = []
+    for cycle in islice(nx.simple_cycles(graph), max_cycles):
+        if len(cycle) < 1:
+            continue
+        # compute min weight around the cycle
+        edges_in_cycle = [(cycle[i], cycle[(i + 1) % len(cycle)]) for i in range(len(cycle))]
+        weights = [graph.edges[e].get("weight", 1) for e in edges_in_cycle if graph.has_edge(*e)]
+        min_w = min(weights) if weights else 0
+        results.append({
+            "loop_path":       " → ".join(cycle) + " → " + cycle[0],
+            "length":          len(cycle),
+            "min_edge_weight": min_w,
+            "nodes":           cycle,
+        })
+    # sort by length then by frequency desc
+    results.sort(key=lambda r: (r["length"], -r["min_edge_weight"]))
+    return results
+
+
+def write_loops_csv(path: str, loops: list[dict]):
+    with open(path, "w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=["rank", "loop_path", "length", "min_edge_weight"])
+        writer.writeheader()
+        for rank, loop in enumerate(loops, 1):
+            writer.writerow({
+                "rank":            rank,
+                "loop_path":       loop["loop_path"],
+                "length":          loop["length"],
+                "min_edge_weight": loop["min_edge_weight"],
+            })
+
+
+def print_loops_table(loops: list[dict]):
+    if not loops:
+        print("No loops (cycles) detected in the process graph.")
+        return
+    print()
+    print("═" * 90)
+    print(f"  LOOP DETECTION  —  {len(loops)} cycle(s) found")
+    print("═" * 90)
+    print(f"{'Rank':<5} {'Len':<5} {'Freq (min weight)':<20} {'Loop Path'}")
+    print("─" * 90)
+    for rank, loop in enumerate(loops, 1):
+        label = loop["loop_path"]
+        if len(label) > 55:
+            label = label[:52] + "..."
+        print(f"{rank:<5} {loop['length']:<5} {loop['min_edge_weight']:<20} {label}")
+    print("═" * 90)
+
+
+def get_loop_edges(loops: list[dict]) -> set[tuple[str, str]]:
+    """Return the set of (source, target) edges that participate in any cycle."""
+    edge_set: set[tuple[str, str]] = set()
+    for loop in loops:
+        cycle = loop["nodes"]
+        for i in range(len(cycle)):
+            edge_set.add((cycle[i], cycle[(i + 1) % len(cycle)]))
+    return edge_set
+
+
+def draw_graph(graph: nx.DiGraph, centrality_df: pd.DataFrame, output_path: str, seed: int,
+              loop_edges: set[tuple[str, str]] | None = None):
+    loop_edges = loop_edges or set()
     fig, ax = plt.subplots(figsize=(14, 9))
     pos = nx.spring_layout(graph, seed=seed, k=1.2 / (graph.number_of_nodes() ** 0.5))
 
@@ -178,17 +254,34 @@ def draw_graph(graph: nx.DiGraph, centrality_df: pd.DataFrame, output_path: str,
     max_count = max(counts) or 1
     node_sizes = [400 + 2000 * (c / max_count) for c in counts]
 
-    # edge width proportional to weight
-    weights = [graph.edges[e].get("weight", 1) for e in graph.edges]
-    max_w = max(weights) or 1
-    edge_widths = [0.5 + 4.5 * (w / max_w) for w in weights]
+    # split edges into normal vs loop edges (loop edges drawn in red/orange)
+    normal_edges = [e for e in graph.edges if e not in loop_edges]
+    loop_edge_list = [e for e in graph.edges if e in loop_edges]
+
+    weights_all = [graph.edges[e].get("weight", 1) for e in graph.edges]
+    max_w = max(weights_all) or 1
+
+    def edge_width(e):
+        return 0.5 + 4.5 * (graph.edges[e].get("weight", 1) / max_w)
+
+    normal_widths = [edge_width(e) for e in normal_edges]
+    loop_widths   = [edge_width(e) for e in loop_edge_list]
 
     nx.draw_networkx_nodes(graph, pos, ax=ax, node_size=node_sizes,
                            node_color=node_colors, alpha=0.92)
-    nx.draw_networkx_edges(graph, pos, ax=ax, width=edge_widths,
+    # normal edges
+    nx.draw_networkx_edges(graph, pos, ax=ax, edgelist=normal_edges,
+                           width=normal_widths,
                            alpha=0.55, edge_color="#444444",
                            arrows=True, arrowsize=15,
                            connectionstyle="arc3,rad=0.05")
+    # loop edges — red + higher curvature so they don't overlap
+    if loop_edge_list:
+        nx.draw_networkx_edges(graph, pos, ax=ax, edgelist=loop_edge_list,
+                               width=loop_widths,
+                               alpha=0.85, edge_color="#E74C3C",
+                               arrows=True, arrowsize=18,
+                               connectionstyle="arc3,rad=0.30")
     nx.draw_networkx_labels(graph, pos, ax=ax, font_size=8, font_weight="bold")
 
     # colour bar legend
@@ -197,7 +290,15 @@ def draw_graph(graph: nx.DiGraph, centrality_df: pd.DataFrame, output_path: str,
     cbar = fig.colorbar(sm, ax=ax, fraction=0.03, pad=0.02)
     cbar.set_label("Importance Score", fontsize=10)
 
-    ax.set_title("Sepsis Event Log — Activity Graph\n(size = frequency | colour = importance)",
+    # loop edge legend patch
+    import matplotlib.patches as mpatches
+    legend_items = []
+    if loop_edge_list:
+        legend_items.append(mpatches.Patch(color="#E74C3C", label=f"Loop edge ({len(loop_edge_list)} edges)"))
+    if legend_items:
+        ax.legend(handles=legend_items, loc="lower left", fontsize=8)
+
+    ax.set_title("Sepsis Event Log — Activity Graph\n(size = frequency | colour = importance | red = loop edge)",
                  fontsize=13, fontweight="bold")
     ax.axis("off")
     fig.tight_layout()
@@ -233,14 +334,21 @@ def main() -> int:
     png_path         = os.path.join(args.output_dir, "graph.png")
     summary_path     = os.path.join(args.output_dir, "summary.json")
     centrality_csv   = os.path.join(args.output_dir, "centrality.csv")
+    loops_csv        = os.path.join(args.output_dir, "loops.csv")
 
     centrality_df = compute_centrality(graph)
+
+    # ── Loop detection ──
+    loops = detect_loops(graph)
+    loop_edges = get_loop_edges(loops)
+    write_loops_csv(loops_csv, loops)
+    print_loops_table(loops)
 
     write_edges_csv(edges_csv, filtered_edges)
     nx.write_graphml(graph, graphml_path)
     write_summary(summary_path, trace_count, event_count, activity_counts)
     write_centrality(centrality_csv, centrality_df)
-    draw_graph(graph, centrality_df, png_path, seed=args.seed)
+    draw_graph(graph, centrality_df, png_path, seed=args.seed, loop_edges=loop_edges)
 
     print("Graph generated:")
     print(f"  Traces:     {trace_count}")
@@ -256,6 +364,7 @@ def main() -> int:
               f"{row['betweenness_centrality']:>13.4f} {row['pagerank']:>10.4f} "
               f"{row['importance_score']:>7.4f}")
     print("─" * 80)
+    print(f"  Loops:      {len(loops)} cycle(s) detected")
     print(f"  Outputs: {args.output_dir}/")
     return 0
 
