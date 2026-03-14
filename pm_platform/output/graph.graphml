@@ -1,0 +1,400 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d1" for="edge" attr.name="weight" attr.type="long" />
+  <key id="d0" for="node" attr.name="count" attr.type="long" />
+  <graph edgedefault="directed">
+    <node id="ER Registration">
+      <data key="d0">1050</data>
+    </node>
+    <node id="Leucocytes">
+      <data key="d0">3383</data>
+    </node>
+    <node id="CRP">
+      <data key="d0">3262</data>
+    </node>
+    <node id="LacticAcid">
+      <data key="d0">1466</data>
+    </node>
+    <node id="ER Triage">
+      <data key="d0">1053</data>
+    </node>
+    <node id="ER Sepsis Triage">
+      <data key="d0">1049</data>
+    </node>
+    <node id="IV Liquid">
+      <data key="d0">753</data>
+    </node>
+    <node id="IV Antibiotics">
+      <data key="d0">823</data>
+    </node>
+    <node id="Admission NC">
+      <data key="d0">1182</data>
+    </node>
+    <node id="Release A">
+      <data key="d0">671</data>
+    </node>
+    <node id="Return ER">
+      <data key="d0">294</data>
+    </node>
+    <node id="Admission IC">
+      <data key="d0">117</data>
+    </node>
+    <node id="Release B">
+      <data key="d0">56</data>
+    </node>
+    <node id="Release C">
+      <data key="d0">25</data>
+    </node>
+    <node id="Release D">
+      <data key="d0">24</data>
+    </node>
+    <node id="Release E">
+      <data key="d0">6</data>
+    </node>
+    <edge source="ER Registration" target="Leucocytes">
+      <data key="d1">21</data>
+    </edge>
+    <edge source="ER Registration" target="ER Triage">
+      <data key="d1">971</data>
+    </edge>
+    <edge source="ER Registration" target="ER Sepsis Triage">
+      <data key="d1">11</data>
+    </edge>
+    <edge source="ER Registration" target="IV Liquid">
+      <data key="d1">22</data>
+    </edge>
+    <edge source="ER Registration" target="LacticAcid">
+      <data key="d1">10</data>
+    </edge>
+    <edge source="ER Registration" target="CRP">
+      <data key="d1">14</data>
+    </edge>
+    <edge source="ER Registration" target="Admission IC">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Leucocytes" target="CRP">
+      <data key="d1">1778</data>
+    </edge>
+    <edge source="Leucocytes" target="Leucocytes">
+      <data key="d1">458</data>
+    </edge>
+    <edge source="Leucocytes" target="Release A">
+      <data key="d1">225</data>
+    </edge>
+    <edge source="Leucocytes" target="ER Sepsis Triage">
+      <data key="d1">36</data>
+    </edge>
+    <edge source="Leucocytes" target="IV Liquid">
+      <data key="d1">102</data>
+    </edge>
+    <edge source="Leucocytes" target="LacticAcid">
+      <data key="d1">435</data>
+    </edge>
+    <edge source="Leucocytes" target="Admission NC">
+      <data key="d1">153</data>
+    </edge>
+    <edge source="Leucocytes" target="Admission IC">
+      <data key="d1">18</data>
+    </edge>
+    <edge source="Leucocytes" target="IV Antibiotics">
+      <data key="d1">73</data>
+    </edge>
+    <edge source="Leucocytes" target="Release C">
+      <data key="d1">8</data>
+    </edge>
+    <edge source="Leucocytes" target="Release D">
+      <data key="d1">11</data>
+    </edge>
+    <edge source="Leucocytes" target="ER Registration">
+      <data key="d1">14</data>
+    </edge>
+    <edge source="Leucocytes" target="ER Triage">
+      <data key="d1">11</data>
+    </edge>
+    <edge source="Leucocytes" target="Release B">
+      <data key="d1">14</data>
+    </edge>
+    <edge source="Leucocytes" target="Release E">
+      <data key="d1">2</data>
+    </edge>
+    <edge source="Leucocytes" target="Return ER">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="CRP" target="LacticAcid">
+      <data key="d1">629</data>
+    </edge>
+    <edge source="CRP" target="Leucocytes">
+      <data key="d1">1445</data>
+    </edge>
+    <edge source="CRP" target="CRP">
+      <data key="d1">317</data>
+    </edge>
+    <edge source="CRP" target="Release A">
+      <data key="d1">322</data>
+    </edge>
+    <edge source="CRP" target="IV Liquid">
+      <data key="d1">111</data>
+    </edge>
+    <edge source="CRP" target="Admission NC">
+      <data key="d1">187</data>
+    </edge>
+    <edge source="CRP" target="Release B">
+      <data key="d1">19</data>
+    </edge>
+    <edge source="CRP" target="IV Antibiotics">
+      <data key="d1">81</data>
+    </edge>
+    <edge source="CRP" target="Admission IC">
+      <data key="d1">17</data>
+    </edge>
+    <edge source="CRP" target="Release C">
+      <data key="d1">13</data>
+    </edge>
+    <edge source="CRP" target="ER Triage">
+      <data key="d1">16</data>
+    </edge>
+    <edge source="CRP" target="ER Sepsis Triage">
+      <data key="d1">35</data>
+    </edge>
+    <edge source="CRP" target="Release D">
+      <data key="d1">12</data>
+    </edge>
+    <edge source="CRP" target="ER Registration">
+      <data key="d1">14</data>
+    </edge>
+    <edge source="CRP" target="Release E">
+      <data key="d1">3</data>
+    </edge>
+    <edge source="LacticAcid" target="ER Triage">
+      <data key="d1">14</data>
+    </edge>
+    <edge source="LacticAcid" target="Leucocytes">
+      <data key="d1">565</data>
+    </edge>
+    <edge source="LacticAcid" target="IV Antibiotics">
+      <data key="d1">89</data>
+    </edge>
+    <edge source="LacticAcid" target="CRP">
+      <data key="d1">404</data>
+    </edge>
+    <edge source="LacticAcid" target="Admission NC">
+      <data key="d1">102</data>
+    </edge>
+    <edge source="LacticAcid" target="IV Liquid">
+      <data key="d1">124</data>
+    </edge>
+    <edge source="LacticAcid" target="LacticAcid">
+      <data key="d1">83</data>
+    </edge>
+    <edge source="LacticAcid" target="ER Sepsis Triage">
+      <data key="d1">42</data>
+    </edge>
+    <edge source="LacticAcid" target="Release A">
+      <data key="d1">3</data>
+    </edge>
+    <edge source="LacticAcid" target="Release B">
+      <data key="d1">4</data>
+    </edge>
+    <edge source="LacticAcid" target="Admission IC">
+      <data key="d1">10</data>
+    </edge>
+    <edge source="LacticAcid" target="Release E">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="LacticAcid" target="ER Registration">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="ER Triage" target="ER Sepsis Triage">
+      <data key="d1">905</data>
+    </edge>
+    <edge source="ER Triage" target="CRP">
+      <data key="d1">48</data>
+    </edge>
+    <edge source="ER Triage" target="Leucocytes">
+      <data key="d1">52</data>
+    </edge>
+    <edge source="ER Triage" target="LacticAcid">
+      <data key="d1">29</data>
+    </edge>
+    <edge source="ER Triage" target="ER Registration">
+      <data key="d1">5</data>
+    </edge>
+    <edge source="ER Triage" target="IV Liquid">
+      <data key="d1">11</data>
+    </edge>
+    <edge source="ER Triage" target="IV Antibiotics">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="IV Liquid">
+      <data key="d1">285</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="Leucocytes">
+      <data key="d1">269</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="CRP">
+      <data key="d1">192</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="IV Antibiotics">
+      <data key="d1">76</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="LacticAcid">
+      <data key="d1">148</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="Admission NC">
+      <data key="d1">19</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="ER Registration">
+      <data key="d1">5</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="Admission IC">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="ER Sepsis Triage" target="ER Triage">
+      <data key="d1">5</data>
+    </edge>
+    <edge source="IV Liquid" target="IV Antibiotics">
+      <data key="d1">501</data>
+    </edge>
+    <edge source="IV Liquid" target="CRP">
+      <data key="d1">46</data>
+    </edge>
+    <edge source="IV Liquid" target="Admission NC">
+      <data key="d1">52</data>
+    </edge>
+    <edge source="IV Liquid" target="Leucocytes">
+      <data key="d1">55</data>
+    </edge>
+    <edge source="IV Liquid" target="LacticAcid">
+      <data key="d1">36</data>
+    </edge>
+    <edge source="IV Liquid" target="ER Registration">
+      <data key="d1">15</data>
+    </edge>
+    <edge source="IV Liquid" target="ER Triage">
+      <data key="d1">23</data>
+    </edge>
+    <edge source="IV Liquid" target="ER Sepsis Triage">
+      <data key="d1">7</data>
+    </edge>
+    <edge source="IV Liquid" target="Release A">
+      <data key="d1">2</data>
+    </edge>
+    <edge source="IV Liquid" target="Release B">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="IV Liquid" target="Admission IC">
+      <data key="d1">3</data>
+    </edge>
+    <edge source="IV Antibiotics" target="Admission NC">
+      <data key="d1">489</data>
+    </edge>
+    <edge source="IV Antibiotics" target="IV Liquid">
+      <data key="d1">62</data>
+    </edge>
+    <edge source="IV Antibiotics" target="LacticAcid">
+      <data key="d1">28</data>
+    </edge>
+    <edge source="IV Antibiotics" target="Leucocytes">
+      <data key="d1">53</data>
+    </edge>
+    <edge source="IV Antibiotics" target="CRP">
+      <data key="d1">48</data>
+    </edge>
+    <edge source="IV Antibiotics" target="Admission IC">
+      <data key="d1">46</data>
+    </edge>
+    <edge source="IV Antibiotics" target="ER Triage">
+      <data key="d1">6</data>
+    </edge>
+    <edge source="IV Antibiotics" target="Release B">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="IV Antibiotics" target="Release A">
+      <data key="d1">2</data>
+    </edge>
+    <edge source="IV Antibiotics" target="ER Registration">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Admission NC" target="CRP">
+      <data key="d1">369</data>
+    </edge>
+    <edge source="Admission NC" target="Admission NC">
+      <data key="d1">175</data>
+    </edge>
+    <edge source="Admission NC" target="Leucocytes">
+      <data key="d1">408</data>
+    </edge>
+    <edge source="Admission NC" target="Release A">
+      <data key="d1">117</data>
+    </edge>
+    <edge source="Admission NC" target="Release B">
+      <data key="d1">17</data>
+    </edge>
+    <edge source="Admission NC" target="IV Liquid">
+      <data key="d1">22</data>
+    </edge>
+    <edge source="Admission NC" target="Admission IC">
+      <data key="d1">20</data>
+    </edge>
+    <edge source="Admission NC" target="LacticAcid">
+      <data key="d1">27</data>
+    </edge>
+    <edge source="Admission NC" target="Release D">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Admission NC" target="IV Antibiotics">
+      <data key="d1">2</data>
+    </edge>
+    <edge source="Admission NC" target="Release C">
+      <data key="d1">4</data>
+    </edge>
+    <edge source="Admission NC" target="ER Sepsis Triage">
+      <data key="d1">5</data>
+    </edge>
+    <edge source="Admission NC" target="ER Triage">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Release A" target="Return ER">
+      <data key="d1">276</data>
+    </edge>
+    <edge source="Release A" target="CRP">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Release A" target="Leucocytes">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Return ER" target="CRP">
+      <data key="d1">3</data>
+    </edge>
+    <edge source="Admission IC" target="Admission NC">
+      <data key="d1">4</data>
+    </edge>
+    <edge source="Admission IC" target="LacticAcid">
+      <data key="d1">41</data>
+    </edge>
+    <edge source="Admission IC" target="CRP">
+      <data key="d1">32</data>
+    </edge>
+    <edge source="Admission IC" target="Leucocytes">
+      <data key="d1">38</data>
+    </edge>
+    <edge source="Admission IC" target="Admission IC">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Admission IC" target="ER Sepsis Triage">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Release B" target="Admission NC">
+      <data key="d1">1</data>
+    </edge>
+    <edge source="Release C" target="Return ER">
+      <data key="d1">6</data>
+    </edge>
+    <edge source="Release D" target="Return ER">
+      <data key="d1">10</data>
+    </edge>
+    <edge source="Release E" target="Return ER">
+      <data key="d1">1</data>
+    </edge>
+  </graph>
+</graphml>

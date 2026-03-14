@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-03-13T17:25:44",
+  "traces": 1050,
+  "events": 15214,
+  "unique_activities": 16,
+  "top_activities": [
+    [
+      "Leucocytes",
+      3383
+    ],
+    [
+      "CRP",
+      3262
+    ],
+    [
+      "LacticAcid",
+      1466
+    ],
+    [
+      "Admission NC",
+      1182
+    ],
+    [
+      "ER Triage",
+      1053
+    ],
+    [
+      "ER Registration",
+      1050
+    ],
+    [
+      "ER Sepsis Triage",
+      1049
+    ],
+    [
+      "IV Antibiotics",
+      823
+    ],
+    [
+      "IV Liquid",
+      753
+    ],
+    [
+      "Release A",
+      671
+    ]
+  ]
+}
